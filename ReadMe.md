@@ -151,13 +151,16 @@ This model building project is intended to showcase my ability to a) mine a vari
 My large model which uses cohort data to predict pathogenicity has an high level of accuracy (~98%). The second, smaller model, is able to predict the effect of a broader array of variants, including those that have never been identified in patients. While this model necessarily has lower accuracy, it achieved a surprisingly high model score at 93%, and works for roughly 86% of variants. It may be useful as a research tool.
 
 # Online tool creation
-I am currently building a Plotly dashboard takes the user-given variant information and uses it to query the library of known mutations (ambiguous and non-ambiguous), and to make variant effect predictions using the small model.<br>
+I am currently building a Python Plotly dashboard takes the user-given variant information, uses it to query the library of known mutations (ambiguous and non-ambiguous), and to make variant effect predictions using the large and small models.<br>
 
 General procedure: <br>
 - Input is one variant's information - CHROM, POS, REF, ALT<br>
 - Output A: If the variant is known, all information for that variant is reported along with ClinVar's Clinical Significance data. 
 - Outupt B: If the variant is not known, the app will use VEP to make mulitple calculations about the mutation such as the effect on splicing (with SpliceAI), if the mutation is a transition/transversion, indel, or SNP, etc. This will populate the data fields needed for effect prediction by the small/general/low-res model which will report "Likely Benign" or "Likely Pathogenic".
 
-Current draft of my Plotly dashboard :)<br><br>
+Website Construction Status:<br>
+- Docker container cbreuer/variant_model:latest will run the Plotly app
+- Status: under construction on AWS
+- A quick look at the dashboard: <br><br>
 ![Python Dashboard](./media/dash.jpg)
 
