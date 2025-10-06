@@ -4,10 +4,15 @@
 <i>Using only basic info, the model predicts if a SNP is pathogenic or benign with high confidence </i>
 
 ## Highlights:
+### Two ML Models:
 - Two histogram-based gradient boosting classification models that predict variant effects
 - Model 1: predicts the effect of mutations for which cohort data is available (Accuracy: ~98%)
-- Model 2: predicts effects for uncharacterized mutants (Accuracy: ~93% )
-- Predictions about the effect of ~600k known variants with ambiguous clinical significance
+- Model 2: predicts effects for uncharacterized mutants (Accuracy: ~93%)
+### Predictions:
+- predicted effects of ~2M variants with ambiguous/conflicting reports in ClinVar
+
+### Online Tool:
+- Interactive Plotly dashboard for ML model predictions
 
 ## Input/Output Example:
 - Input: chr1, position 331523, A>G
@@ -104,7 +109,7 @@ During my first training, I noticed that indel detection came in last in terms o
 ![Features](./media/featureimportance.jpg)
 
 ## Real-World Use Case:
-The NCBI ClinVar data consists of 3.6M records of which two thirds (over 2M records) have ambiguous clinical significance. I propose that inferring their effects via ML could be valuable. Therefore, after training the model on the 1.5M high-confidence samples, I predicted the effect of the ambiguous variants. [Jupyter notebook](./jupyter_notebooks/model.ipynb). At the 93% accuracy cutoff, roughly 25% (539k) of ambiguous variants are predicted to be pathogenic - a staggering number that exceeds the number of known pathogenic variants.  
+The NCBI ClinVar data consists of 3.6M records of which two thirds (over 2M records) have ambiguous clinical significance. I propose that inferring their effects via ML could be valuable. Therefore, after training the model on the 1.5M high-confidence samples, I used my large model to predict the effect of those variants. [Jupyter notebook](./jupyter_notebooks/model.ipynb). After filtering the results to variants with high confidence scores (thereby yielding an expected accuracy of 93%) 1,950,978 variants remained. Among themn, roughly 25% (539k) are predicted to be pathogenic - a staggering number that exceeds the number of ClinVar's clearly defined pathogenic variants (311k). Among the remaining variants, 1,411,452 are predicted to be benign and 148,400 are of indeterminate effect. 
 
 ## A second model for uncharacterized variants
 While the first model is accurate, it requires cohort data as input. As such, it can only predict the effect of variants that have been previously observed in many people. Therefore, an additioinal model is needed for previously unidentified variants.
@@ -150,8 +155,8 @@ I am currently building a Plotly dashboard takes the user-given variant informat
 
 General procedure: <br>
 - Input is one variant's information - CHROM, POS, REF, ALT<br>
-- Output A: If the variant is known, all information for that variant is reported along with the known effect. 
-- Outupt B: If the variant is not known, the app will make mulitple calculations to populate the data fields needed for effect prediction by the small model, then report "Likely Benign" or "Likely Pathogenic".
+- Output A: If the variant is known, all information for that variant is reported along with ClinVar's Clinical Significance data. 
+- Outupt B: If the variant is not known, the app will use VEP to make mulitple calculations about the mutation such as the effect on splicing (with SpliceAI), if the mutation is a transition/transversion, indel, or SNP, etc. This will populate the data fields needed for effect prediction by the small/general/low-res model which will report "Likely Benign" or "Likely Pathogenic".
 
 Current draft of my Plotly dashboard :)<br><br>
 ![Python Dashboard](./media/dash.jpg)
