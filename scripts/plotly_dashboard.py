@@ -186,6 +186,7 @@ def _lookup(chrom_val, pos_val, ref_val, alt_val,
 # Dash App
 # ---------------------------------
 app = Dash(__name__)
+server = app.server
 app.title = "Predicting the Clinical Significance of Human Genetic Variants"
 
 CARD_STYLE = {
@@ -220,7 +221,7 @@ banner = html.Div(
 )
 
 LOAD_STATUS_TEXT =  "Large Model Background:<br>" \
-                    "  - Trained on a a large dataset including mutation type, cohort and constraint data." \
+                    "  - Trained on a a large dataset including mutation type, cohort and constraint data.<br>" \
                     "  - Strengths: highly accurate (~98%)<br>" \
                     "  - Weaknesses: requires cohort data, so it can't make predictions about unreported variants.<br><br>" \
                     "Small Model Background:<br>" \
