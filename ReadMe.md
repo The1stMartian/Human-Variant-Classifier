@@ -98,7 +98,12 @@ Data field engineering steps included one-hot encoding of mutation type: from a 
 
 
 ## Model Scoring
-Given the richness of the training data, it is perhaps not surprising that the initial training produced a highly accurate model with an overall precision scores of 0.985 for both recall and precision. I observed a rate of 2.9% for Type I errors and 2.9% for Type II errors. See my [Jupyter notebook](./jupyter_notebooks/model.ipynb) for the actual code. <br>
+Given the richness of the training data, it is perhaps not surprising that the initial training produced a highly accurate model with an overall precision scores of 0.985 for both recall and precision. The 5-fold cross validated AUROC AND AUPRC curves were consistent, suggesting a lack of over-fitting. 
+
+![Curves](./media/curves.jpg)<br><br>
+![AUC](./media/auc.jpg)<br>
+
+Using confusion matrices, I observed a rate of 2.9% for Type I errors and 2.9% for Type II errors. See my [Jupyter notebook](./jupyter_notebooks/model.ipynb) for the actual code. <br>
 
 ![Confusion Matrix 1](./media/cm1.jpg)<br>
 
